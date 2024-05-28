@@ -1,0 +1,4 @@
+#deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
+
+#NEW - add this new repo instead:
+deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription

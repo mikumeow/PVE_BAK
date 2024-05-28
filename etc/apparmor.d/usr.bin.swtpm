@@ -1,0 +1,30 @@
+# vim:syntax=apparmor
+# AppArmor policy for swtpm
+
+#include <tunables/global>
+
+profile swtpm /usr/bin/swtpm {
+  #include <abstractions/base>
+  #include <abstractions/openssl>
+
+  # Site-specific additions and overrides. See local/README for details.
+  #include <local/usr.bin.swtpm>
+
+  capability chown,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability fsetid,
+  capability setgid,
+  capability setuid,
+
+  network inet stream,
+  network inet6 stream,
+  unix (send) type=dgram addr=none peer=(addr=none),
+  unix (send, receive) type=stream addr=none peer=(label=libvirt-*),
+
+  /usr/bin/swtpm rm,
+
+  # Proxmox VE allow to save states on many possible locations, so allow everything for now.
+  /** rwk,
+}
